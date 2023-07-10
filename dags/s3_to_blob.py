@@ -5,7 +5,7 @@ import os
 import boto3
 from azure.storage.blob import BlobClient
 
-version = '11c40e3'
+version = '7007973'
 
 # AWS credentials from environment variables
 aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
