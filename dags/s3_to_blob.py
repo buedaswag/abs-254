@@ -3,9 +3,7 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 import os
 import boto3
-from azure.storage.blob import BlobClient
-
-version = '7007973'
+from azure.storage.blob import BlobClient, BlobServiceClient
 
 # AWS credentials from environment variables
 aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
@@ -19,6 +17,7 @@ s3_bucket = 'rlxabs254test'
 s3_file_key = 'test.txt'
 
 # Azure Blob details
+blob_container_name = 'airflow'
 blob_name = 'test.txt'
 
 # Local file path
@@ -31,14 +30,14 @@ def transfer_s3_to_blob():
     s3_client.download_file(s3_bucket, s3_file_key, local_file_path)
 
     # Create a blob client using the blob SAS URL
-    blob_client = BlobClient.from_blob_url(blob_sas_url)
+    blob_service_client = BlobServiceClient.from_connection_string(blob_sas_url)
+    blob_client = blob_service_client.get_blob_client(blob_container_name, blob_name)
 
     print("\nUploading to Azure Storage as blob:\n\t" + local_file_path)
 
     # Upload the downloaded file
     with open(local_file_path, "rb") as data:
         blob_client.upload_blob(data, overwrite=True)
-
 
 dag = DAG(
     's3_to_blob',
