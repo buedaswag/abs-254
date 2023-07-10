@@ -19,8 +19,8 @@ s3_bucket = 'rlxabs254test'
 file_name = 'test.txt'
 
 # Azure Blob details
-storage_account_name = 'rlxabs254airflowdags'
-container_name = 'airflow'
+storage_account_name = 'rlxabs254test'
+container_name = 'abs-254'
 
 # Local file path
 local_file_path = '/tmp/test.txt'
@@ -39,7 +39,7 @@ def transfer_s3_to_blob():
     account_url = (f"https://{storage_account_name}.blob.core.windows.net")
     blob_service_client = BlobServiceClient(account_url, credential=blob_sas_url)
 
-    blob_client = blob_service_client.get_blob_client(container_name, file_name)
+    blob_client = blob_service_client.get_blob_client(container=container_name, blob=file_name)
 
     print("\nUploading to Azure Storage as blob:\n\t" + local_file_path)
     # Upload the downloaded file
