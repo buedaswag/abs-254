@@ -16,11 +16,11 @@ blob_sas_url = os.environ['AZURE_BLOB_SAS_URL']
 
 # S3 bucket and file details
 s3_bucket = 'rlxabs254test'
-s3_file_key = 'test.txt'
+file_name = 'test.txt'
 
 # Azure Blob details
-blob_container_name = 'airflow'
-blob_name = 'test.txt'
+storage_account_name = 'rlxabs254airflowdags'
+container_name = 'airflow'
 
 # Local file path
 local_file_path = '/tmp/test.txt'
@@ -28,15 +28,20 @@ local_file_path = '/tmp/test.txt'
 def transfer_s3_to_blob():
     s3_client = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
-    # Download the file from S3 to the local file system
-    s3_client.download_file(s3_bucket, s3_file_key, local_file_path)
+    print("\nDownloading from s3:\n\t" + local_file_path)
 
-    # Create a blob client using the blob SAS URL
-    blob_service_client = BlobServiceClient.from_connection_string(blob_sas_url)
-    blob_client = blob_service_client.get_blob_client(blob_container_name, blob_name)
+    # Download the file from S3 to the local file system
+    s3_client.download_file(s3_bucket, file_name, local_file_path)
+
+    #########
+    # Upload the file to Azure Blob
+    #########
+    account_url = (f"https://{storage_account_name}.blob.core.windows.net")
+    blob_service_client = BlobServiceClient(account_url, credential=blob_sas_url)
+
+    blob_client = blob_service_client.get_blob_client(container_name, file_name)
 
     print("\nUploading to Azure Storage as blob:\n\t" + local_file_path)
-
     # Upload the downloaded file
     with open(local_file_path, "rb") as data:
         blob_client.upload_blob(data, overwrite=True)
