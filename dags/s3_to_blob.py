@@ -15,11 +15,11 @@ aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
 blob_sas_url = os.environ['AZURE_BLOB_SAS_URL']
 
 # S3 bucket and file details
-s3_bucket = 'my-s3-bucket'
-s3_file_key = 'my-s3-object-key'
+s3_bucket = 'rlxabs254test'
+s3_file_key = 'test.txt'
 
 # Azure Blob details
-blob_name = 'my-blob-name'
+blob_name = 'test.txt'
 
 # Local file path
 local_file_path = '/tmp/test.txt'
