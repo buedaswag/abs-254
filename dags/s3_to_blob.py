@@ -39,15 +39,16 @@ def transfer_s3_to_blob():
     #########
     # Get the creds from key vault
     #########
-    credential = ClientSecretCredential(
-        tenant_id=os.environ["ARM_TENANT_ID"],
-        client_id=os.environ["ARM_CLIENT_ID"],
-        client_secret=os.environ["ARM_CLIENT_SECRET"]
-    )
-    vault_url = f"https://{key_vault_name}.vault.azure.net".format()
-    client = SecretClient(vault_url=vault_url, credential=credential)
-    sas_token = client.get_secret(sas_token_name).value
-
+    # TODO this is failing, no permissions to retrieve secret from keyvault, why?
+    # credential = ClientSecretCredential(
+    #     tenant_id=os.environ["ARM_TENANT_ID"],
+    #     client_id=os.environ["ARM_CLIENT_ID"],
+    #     client_secret=os.environ["ARM_CLIENT_SECRET"]
+    # )
+    # vault_url = f"https://{key_vault_name}.vault.azure.net".format()
+    # client = SecretClient(vault_url=vault_url, credential=credential)
+    # sas_token = client.get_secret(sas_token_name).value
+    sas_token = os.environ["SAS_TOKEN"]
     #########
     # Upload the file to Azure Blob
     #########
