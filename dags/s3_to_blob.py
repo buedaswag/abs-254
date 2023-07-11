@@ -14,9 +14,6 @@ version = "160d51f"
 aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
 aws_secret_access_key = os.environ['AWS_SECRET_ACCESS_KEY']
 
-# Azure Storage blob SAS URL from environment variables
-blob_sas_url = os.environ['AZURE_BLOB_SAS_URL']
-
 # S3 bucket and file details
 s3_bucket = 'rlxabs254k8stest'
 file_name = 'test.txt'
