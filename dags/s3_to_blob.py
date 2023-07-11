@@ -8,7 +8,7 @@ from azure.identity import ClientSecretCredential
 from azure.keyvault.secrets import SecretClient
 
 
-version = "349309f"
+version = "160d51f"
 
 # AWS credentials from environment variables
 aws_access_key_id = os.environ['AWS_ACCESS_KEY_ID']
